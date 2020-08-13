@@ -2,6 +2,7 @@ package cl.mineduc.sismica.actividad.controller;
 
 import cl.mineduc.sismica.actividad.domain.usgs.earthquake.Feature;
 import cl.mineduc.sismica.actividad.domain.usgs.earthquake.FeatureCollection;
+import cl.mineduc.sismica.actividad.repository.FeatureRepository;
 import cl.mineduc.sismica.actividad.service.ActividadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class ConsultaActividadController {
     private final RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private ActividadService actividadService;
+
 
     @GetMapping("/fecha")
     public FeatureCollection consultaPorFecha(
