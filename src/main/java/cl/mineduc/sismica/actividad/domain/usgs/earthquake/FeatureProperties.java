@@ -2,8 +2,18 @@ package cl.mineduc.sismica.actividad.domain.usgs.earthquake;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class FeatureProperties {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     private Float mag;
     private String place;
@@ -31,6 +41,20 @@ public class FeatureProperties {
     private String magType;
     private String type;
     private String title;
+
+    /**
+     * Getter for property 'id'.
+     *
+     * @return Value for property 'id'.
+     */
+    public String getId() { return id; }
+
+    /**
+     * Setter for property 'id'.
+     *
+     * @param id Value to set for property 'id'.
+     */
+    public void setId(String id) { this.id = id; }
 
     /**
      * Getter for property 'mag'.
@@ -503,7 +527,8 @@ public class FeatureProperties {
     @Override
     public String toString() {
         return "FeatureProperties{" +
-                "mag=" + mag +
+                "id=" + id +
+                ", mag=" + mag +
                 ", place='" + place + '\'' +
                 ", time=" + time +
                 ", updated=" + updated +

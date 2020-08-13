@@ -2,12 +2,24 @@ package cl.mineduc.sismica.actividad.domain.usgs.earthquake;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class Feature {
-    private String type;
-    private FeatureProperties featureProperties;
-    private String geometryObject;
+    @Id
     private String id;
+
+    private String type;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private FeatureProperties properties;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Geometry geometry;
 
 
     /**
@@ -29,40 +41,22 @@ public class Feature {
     }
 
     /**
-     * Getter for property 'featureProperties'.
+     * Getter for property 'properties'.
      *
-     * @return Value for property 'featureProperties'.
+     * @return Value for property 'properties'.
      */
-    public FeatureProperties getFeatureProperties() {
-        return featureProperties;
+    public FeatureProperties getProperties() {
+        return properties;
     }
 
     /**
-     * Setter for property 'featureProperties'.
+     * Setter for property 'properties'.
      *
-     * @param featureProperties Value to set for property 'featureProperties'.
+     * @param properties Value to set for property 'properties'.
      */
-    public void setFeatureProperties(FeatureProperties featureProperties) {
-        this.featureProperties = featureProperties;
+    public void setProperties(FeatureProperties properties) { this.properties = properties;
     }
 
-    /**
-     * Getter for property 'geometryObject'.
-     *
-     * @return Value for property 'geometryObject'.
-     */
-    public String getGeometryObject() {
-        return geometryObject;
-    }
-
-    /**
-     * Setter for property 'geometryObject'.
-     *
-     * @param geometryObject Value to set for property 'geometryObject'.
-     */
-    public void setGeometryObject(String geometryObject) {
-        this.geometryObject = geometryObject;
-    }
 
     /**
      * Getter for property 'id'.
@@ -82,13 +76,28 @@ public class Feature {
         this.id = id;
     }
 
+    /**
+     * Getter for property 'geometry'.
+     *
+     * @return Value for property 'geometry'.
+     */
+    public Geometry getGeometry() { return geometry; }
+
+    /**
+     * Setter for property 'geometry'.
+     *
+     * @param geometry Value to set for property 'geometry'.
+     */
+    public void setGeometry(Geometry geometry) { this.geometry = geometry; }
+
+
     @Override
     public String toString() {
         return "Feature{" +
                 "type='" + type + '\'' +
-                ", featureProperties=" + featureProperties +
-                ", geometryObject='" + geometryObject + '\'' +
+                ", properties=" + properties +
                 ", id='" + id + '\'' +
+                ", geometry=" + geometry +
                 '}';
     }
 }

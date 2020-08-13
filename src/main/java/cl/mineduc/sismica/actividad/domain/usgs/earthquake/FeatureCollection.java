@@ -90,6 +90,7 @@ public class FeatureCollection {
                 "type='" + type + '\'' +
                 ", metadata=" + metadata +
                 ", features=" + features +
+                ", bbox=" + bbox +
                 '}';
     }
 }
