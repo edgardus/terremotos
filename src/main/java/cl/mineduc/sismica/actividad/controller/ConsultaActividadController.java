@@ -1,33 +1,40 @@
 package cl.mineduc.sismica.actividad.controller;
 
+import cl.mineduc.sismica.actividad.domain.usgs.earthquake.Feature;
 import cl.mineduc.sismica.actividad.domain.usgs.earthquake.FeatureCollection;
+import cl.mineduc.sismica.actividad.service.ActividadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ConsultaActividadController {
 
 
-    RestTemplate restTemplate = new RestTemplate();
     private static final Logger log = LoggerFactory.getLogger(ConsultaActividadController.class);
 
+    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private ActividadService actividadService;
 
     @GetMapping("/fecha")
     public FeatureCollection consultaPorFecha(
             @RequestParam(value = "starttime", defaultValue = "") String starttime,
             @RequestParam(value = "endtime", defaultValue = "2020-12-31") String endtime) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         FeatureCollection featureCollection = new FeatureCollection();
         try {
             if (starttime == null || starttime.isEmpty()) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 starttime = dateFormat.format(new Date());
             }
             log.info("starttime=" + starttime);
@@ -61,11 +68,17 @@ public class ConsultaActividadController {
     }
 
     @GetMapping("/")
-    public Boolean persiste(){
-
-
-
-        return true;
+    public List<Feature> persiste() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date hoyEs = new Date();
+        String startDate = dateFormat.format(hoyEs);
+        Calendar tomorrowIs = Calendar.getInstance();
+        tomorrowIs.setTime(hoyEs);
+        tomorrowIs.add(Calendar.DATE, 1);
+        String endDate = dateFormat.format(tomorrowIs.getTime());
+        FeatureCollection featureCollection = consultaPorFecha(startDate, endDate);
+        List<Feature> featureList = actividadService.saveFeatures(featureCollection);
+        return featureList;
     }
 
 }

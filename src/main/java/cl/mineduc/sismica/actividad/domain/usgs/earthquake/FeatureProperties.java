@@ -13,7 +13,7 @@ public class FeatureProperties {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     private Float mag;
     private String place;
@@ -47,14 +47,18 @@ public class FeatureProperties {
      *
      * @return Value for property 'id'.
      */
-    public String getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
     /**
      * Setter for property 'id'.
      *
      * @param id Value to set for property 'id'.
      */
-    public void setId(String id) { this.id = id; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
     /**
      * Getter for property 'mag'.

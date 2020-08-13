@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Geometry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String type;
     private ArrayList<Float> coordinates  = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Geometry {
      *
      * @return Value for property 'id'.
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -32,7 +32,7 @@ public class Geometry {
      *
      * @param id Value to set for property 'id'.
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,7 +75,7 @@ public class Geometry {
     @Override
     public String toString() {
         return "Geometry{" +
-                "id='" + id + '\'' +
+                "id=" + id.toString() +
                 ", type='" + type + '\'' +
                 ", coordinates=" + coordinates +
                 '}';
